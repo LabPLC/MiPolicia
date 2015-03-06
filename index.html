@@ -1,0 +1,1097 @@
+<!--
+Para la ciudadania.
+Saúl Espinosa Ruiz
+Con el apoyo de diferentes Frameworks e inspiraciones.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <!--<meta name="format-detection" content="telephone=no" />-->
+        <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, target-densitydpi=device-dpi" />-->
+        <!--ANDROID ONLY<link rel="stylesheet" type="text/css" href="css/themes/default/jquery.mobile.css" />-->
+        <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height" />
+        <link rel="stylesheet" type="text/css" href="css/themes/default/jquery.mobile.css" />
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
+
+        <title>Mi Policía 1.6</title>
+    </head>
+    <body>
+        <div data-role="page" id="principal">
+            <div data-theme="c" data-role="header">
+                <h3>
+                    Mi Policía
+                </h3>
+            </div>
+            <div id="header_menu"></div>
+            <div data-role="content">
+                <ul data-role="listview" data-divider-theme="d" data-inset="false">
+                    <li data-theme="d">
+                        <a href="#emergencia" data-transition="none">
+                            <h3>Emergencia</h3>
+                            <p>Cuadrante de tu ubicación actual.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#ubicar" data-transition="none">
+                            <h3>Ubicar cuadrantes</h3>
+                            <p>Búsqueda de cuadrantes en otras posiciones.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#cas" data-transition="none">
+                            <h3>C.A.S.</h3>
+                            <p>Denuncia o sugerencia al Centro de Atención del Secretario.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#vehiculo" data-transition="none">
+                            <h3 class="text_corralon">Depósitos vehiculares (corralones)</h3>
+                            <p>Situación de vehículos remolcados.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#policiaTuristica" data-transition="none">
+                            <h3>Policía turistica</h3>
+                            <p>Información para tu visita al D.F.</p>
+                        </a>
+                    </li>
+                     <li data-theme="d">
+                        <a href="#seguridadPrivada" data-transition="none">
+                            <h3>Seguridad privada</h3>
+                            <p>Conoce la situación de las empresas.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="tel:52089275" data-transition="none">
+                            <h3>English assistance</h3>
+                            <!--<p>Situación de vehículos remolcados.</p>-->
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#politica" data-transition="slideup">
+                            <h3>Política de Privacidad</h3>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="page" id="emergencia">
+            <div data-theme="c" data-role="header">
+                <h3>
+                   Cuadrantes
+                </h3>
+            </div>
+            <div id="map_canvas" style="width:100%;height:250px"></div>
+            <p style="text-align:center;font-size:12px;">LA UBICACIÓN Y EL NÚMERO TELEFÓNICO DEL USUARIO, NO ES ALMACENADO EN NINGUNA BASE DE DATOS DE LA SSP</p>
+            <div data-role="content">
+                <div id="marcar">
+                    <a data-role="button" id="boton_marcar" target="_blank" rel="external" data-theme="b" href="" data-icon="grid" data-iconpos="left">Marcar al cuadrante</a>
+                </div>
+                <div id="datos">
+                    <h3>Datos del cuadrante</h3>
+                    <div id="datos_cuadrante"></div>
+                    <h3>Comandantes de cuadrante</h3>
+                    <div id="comandantes"></div>
+                </div>
+                <div id="fuera_df">
+                    <p>La organización Policial por cuadrantes opera únicamente en el Distrito Federal.</p>
+                </div>
+            </div>
+            <div data-theme="d" data-role="footer" data-tap-toggle="false" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#principal" data-transition="none" data-direction="reverse" data-icon="home">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-transition="none" id="reubicar_emergencia" data-icon="refresh">
+                                Reubicar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="ubicar">
+            <div data-theme="c" data-role="header">
+                <h3>
+                   Búsqueda
+                </h3>
+            </div>
+            <div data-role="content">
+                <input type="search" name="direccion" id="direccion" value="" placeholder="Búsqueda por dirección" data-mini="false" />
+                <button type="submit" data-theme="a" id="ubicar_busqueda" data-mini="false">Buscar</button>
+            </div>
+            <ul data-role="listview" id="resultado_busqueda">
+            </ul>
+            <div data-theme="d" data-role="footer" data-tap-toggle="false" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#principal" data-transition="none" data-direction="reverse" data-icon="home">
+                                Inicio
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="cas">
+            <div data-theme="c" data-role="header">
+                <h3 id="asd">
+                   C.A.S.
+                </h3>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <label for="nombre">
+                        Nombre completo
+                    </label>
+                    <input name="nombre" id="nombre" value="" type="text">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="telefono">
+                        Teléfono para contacto
+                    </label>
+                    <input name="telefono" id="telefono" value="" type="tel">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="tipoDenuncia">
+                        Tipo de denuncia
+                    </label>
+                    <select id="tipoDenuncia" name="tipoDenuncia">
+                        <option value="">-- Seleccione --</option>
+                        <option value="1">Abuso de autoridad</option>
+                        <option value="21">Vandalismo</option>
+                        <option value="9">Vigilancia</option>
+                        <option value="7">Venta de droga</option>
+                    </select>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="denuncia">
+                        Denuncia
+                    </label>
+                    <textarea name="denuncia" id="denuncia"></textarea>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="idDelegacion">
+                        Delegación de la denuncia
+                    </label>
+                    <select id="idDelegacion" name="idDelegacion">
+                        <option value="">-- Seleccione --</option>
+                        <option value="10">Alvaro Obregon</option>
+                        <option value="2">Azcapotzalco</option>
+                        <option value="14">Benito Juarez</option>
+                        <option value="3">Coyoacan</option>
+                        <option value="4">Cuajimalpa</option>
+                        <option value="15">Cuauhtemoc</option>
+                        <option value="5">Gustavo A. Madero</option>
+                        <option value="6">Iztacalco</option>
+                        <option value="7">Iztapalapa</option>
+                        <option value="8">Magdalena Contreras</option>
+                        <option value="16">Miguel Hidalgo</option>
+                        <option value="9">Milpa Alta</option>
+                        <option value="11">Tlahuac</option>
+                        <option value="12">Tlalpan</option>
+                        <option value="17">Venustiano Carranza</option>
+                        <option value="13">Xochimilco</option>
+                    </select>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="calleNumero">
+                        Calle y número
+                    </label>
+                    <input name="calleNumero" id="calleNumero" value="" type="text">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="colonia">
+                        Colonia
+                    </label>
+                    <input name="colonia" id="colonia" value="" type="text">
+                </div>
+                <a href="#" onclick="window.open('http://201.161.9.70/RSDP/ConsultaPublica.aspx', '_system');" style="text-align:center;font-size:12px;">Consulta el sistema de protección de datos del CAS.</a>
+            </div>
+            <div data-theme="d" data-role="footer" id="cas_nav">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#principal" data-transition="none" data-direction="reverse" data-icon="home">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-transition="none" id="enviar-CAS" data-icon="check">
+                                Enviar
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#folios" data-icon="search" data-transition="slideup">
+                                Folios
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="folios">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#cas" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                   Folios C.A.S.
+                </h3>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" data-divider-theme="d" id="folios_listado" data-inset="true">
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="page" id="especificar">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="slideup"
+                data-theme="c" href="#" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                   Folio
+                </h3>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" data-divider-theme="d" id="folios_listado" data-inset="true">
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="page" id="vehiculo">
+            <div data-theme="c" data-role="header">
+                <h3>
+                   Vehículo
+                </h3>
+            </div>
+            <div data-role="content">
+                <p class="desc_corralon">Ingrese el número de placa para conocer sí su vehículo se encuentra en un depósito vehicular (corralón) o en proceso de arrastre.<p>
+                <input type="search" name="placa" id="placa" value="" placeholder="Búsqueda por placa" data-mini="false" />
+                <button type="submit" data-theme="a" id="buscar_info_vehiculo" data-mini="false">Buscar</button>
+                <div id="placas_response_finanzas" style="display:none">
+                    <!--<h4 style="text-align:center;">Detalles de tenencia</h4>-->
+                    <p id="mensaje_tenencia"></p>
+                    <ul data-role="listview" data-divider-theme="b" id="tenencia" data-inset="true">
+                    
+                    </ul>
+                </div>
+                <div id="placas_response_finanzas_infracciones" style="display:none">
+                    <!--<h4 style="text-align:center;">Detalles de tenencia</h4>-->
+                    <p id="mensaje_infraccion"></p>
+                    <ul data-role="listview" data-divider-theme="b" id="infracciones" data-inset="true">
+                    
+                    </ul>
+                </div>
+                <div id="placas_response">
+
+                </div>
+
+                <div id="placas_response_no"></div>
+                
+            </div>
+            <div data-theme="d" data-role="footer" data-tap-toggle="false" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#principal" data-transition="none" data-direction="reverse" data-icon="home">
+                                Inicio
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="politica">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#principal" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                    Políticas
+                </h3>
+            </div>
+            <div data-role="content" class="pol">
+                <h4>Política de Privacidad.</h4>
+                <p>
+                Por medio de nuestra política de privacidad le informamos las condiciones de uso 
+                de la aplicación “MI POLICIA”.
+                Mediante la descarga gratuita de la aplicación “MI POLICIA”, el usuario tendrá 
+                acceso a la información del Programa de Cuadrantes, de manera referenciada 
+                vía GPS en su posición actual o bien, realizando una búsqueda por Delegación, 
+                Colonia y/o Calles, podrá realizar denuncias o quejas al Centro de Atención de Secretario y Verificar si un vehículo fue remitido a un depósito (corralón).<br/><br/>
+                El resultado de la información que verá el usuario, es de manera gráfica un 
+                mapa con la delimitación del área del cuadrante, el número telefónico local al 
+                que podrá marcar en caso de emergencia o consulta de datos informativos del 
+                cuadrante.<br/><br/>
+                Los usuarios con acceso a un Smartphone con sistema operativo iOS y otros podrán descargar de manera gratuita la aplicación.<br/><br/>
+                El objetivo es proporcionar un mejor servicio de la policía a la población usuaria 
+                de este tipo de teléfonos, que se estima en 3 millones de personas incluyendo a 
+                la población flotante. Así como generar un mayor acercamiento con la ciudadanía, 
+                que tendrá una herramienta para su seguridad.
+                </p>
+
+                <h4>Política de Protección de Datos Personales.</h4>
+                <!--<p>La Secretaría de Seguridad Pública del Distrito Federal, guardará secrecía 
+                respecto de los datos obtenidos con motivo de las llamadas de solicitud de 
+                emergencia que se realicen a través de los Smartphone, (nombres, domicilios, 
+                números telefónicos, informes, etc.), comprometiéndose a no usarlos para fines de investigación, ni de difusión.<br/><br/>
+                Cómo principio general, la Secretaría no comparte ni revela información obtenida, 
+                excepto cuando le sea requerida por una autoridad competente que funde y 
+                motive su requerimiento.</p>-->
+                <p>La Secretaría de Seguridad Pública del Distrito Federal, protegerá los datos personales recabados con motivo de las denuncias o sugerencias realizadas al Centro de Atención del Secretario (CAS) que se realicen a través de los Smartphones (nombre, número telefónico o cualquier otro dato personal), atendiendo al sistema de datos personales denominado Centro de Atención del Secretario (CAS) y de conformidad con la Ley de Protección de Datos Personales para el Distrito Federal.</p>
+                <h4>Propiedad Intelectual.</h4>
+                <p>
+                El código fuente, los diseños gráficos, las imágenes, las fotografías, los sonidos, 
+                las animaciones, el software, los textos, así como la información y los contenidos 
+                que se recogen en la aplicación “MI POLICIA” son propiedad de la Secretaría de 
+                Seguridad Pública del Distrito Federal y únicamente, se permite su uso con fines 
+                de seguridad pública, quedando estrictamente prohibido su uso y/o reproducción 
+                total o parcial para fines distintos de los previstos; su modificación, transformación 
+                o decompilación, será realizada por la propia Secretaría.<br/><br/>
+                El usuario única y exclusivamente puede utilizar el material que aparezca en esta 
+                aplicación para fines de consulta y/o solicitud de emergencias, quedando prohibido 
+                su uso con fines comerciales o para incurrir en actividades ilícitas. Todos los 
+                derechos derivados de la propiedad intelectual de la presente aplicación están 
+                expresamente reservados por la Secretaría de Seguridad Pública del Distrito 
+                Federal.</p>
+            </div>
+        </div>
+
+        <div data-role="page" id="seguridadPrivada">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#principal" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                    DGSP
+                </h3>
+            </div>
+
+            <div data-role="content" class="pol">
+                <img src="css/img/dgsp_header.jpg" style="width:100%" />
+                <p>Una de las funciones de la Secretaría de Seguridad Pública del Distrito Federal, a través de la Dirección General de Seguridad Privada y Procedimientos Sistemáticos de Operación, es regular las actividades y la prestación de servicios de seguridad privada en el Distrito Federal, para garantizar que dichos servicios se realicen en las mejores condiciones de eficiencia, seriedad, profesionalismo y respaldo jurídico-financiero, en beneficio de la población.</p>
+                <p>
+                    <a data-role="button" id="buscarEmpresasSeguridadPrivada" data-theme="b" data-icon="search" data-iconpos="left" href="#busquedaSeguridadPrivada" data-transition="none">Busqueda de empresas</a>
+                    <a data-role="button" id="reporteSeguridadPrivada" data-theme="c" data-icon="refresh" data-iconpos="left" href="#fomularioSeguridadPrivada" data-transition="none">Empresas por cuadrante</a>
+                    <a data-role="button" id="botonReporteDirectp" data-theme="c" data-icon="alert" data-iconpos="left" href="#vistaFomularioSeguridadPrivada" data-transition="none">Generar reporte</a>
+                    <a data-role="button" id="botonMasInformacion" data-theme="c" data-icon="plus" data-iconpos="left" href="#vistaMasInformacion" data-transition="none">Más Información</a>
+                </p>
+            </div>
+        </div>
+
+        <div data-role="page" id="fomularioSeguridadPrivada">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#seguridadPrivada" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Atrás
+                </a>
+                <h3>
+                    Empresas por cuadrante
+                </h3>
+            </div>
+            <div id="map_formulario" style="width:100%;height:125px"></div>
+            <h4>Empresas que dan servicios en el cuadrante</h4>
+            <div id="empresasLoading" style="display:none;">Cargando empresas...</div>
+            <ul data-role="listview" id="resultado_cuadrante_sp">
+            </ul>
+        </div>
+
+        <div data-role="page" id="vistaFomularioSeguridadPrivada">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#seguridadPrivada" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Cancelar
+                </a>
+                <h3>
+                    Formulario
+                </h3>
+            </div>
+            <div data-role="content" class="pol">
+                <div data-role="fieldcontain">
+                    <label for="nombreDGSP">Su nombre:</label>
+                     <input type="text" name="nombreDGSP" id="nombreDGSP" value=""  />
+                </div>
+
+                <div data-role="fieldcontain">
+                    <label for="empresaDGSP">Empresa a la que reporta:</label>
+                     <input type="text" name="empresaDGSP" id="empresaDGSP" value=""  />
+                </div>
+                <div data-role="fieldcontain" style="display:none">
+                    <label for="expedienteDGSP">Expediente de la empresa:</label>
+                     <input type="text" name="expedienteDGSP" id="expedienteDGSP" value=""  />
+                </div>
+                <div data-role="fieldcontain" style="display:none">
+                    <label for="idEmpresaDGSP">ID de la empresa:</label>
+                     <input type="text" name="idEmpresaDGSP" id="idEmpresaDGSP" value=""  />
+                </div>
+
+                <div data-role="fieldcontain">
+                    <label for="observacionesDGSP">Observaciones:</label>
+                    <textarea cols="40" rows="8" name="observacionesDGSP" id="observacionesDGSP"></textarea>
+                </div>
+
+                <div data-role="fieldcontain">
+                    <label for="uniformeDGSP">Detalles del uniforme:</label>
+                    <textarea cols="40" rows="8" name="uniformeDGSP" id="uniformeDGSP"></textarea>
+                </div>
+
+                <div data-role="fieldcontain">
+                    <label for="vehiculoDGSP">Detalles del vehículo:</label>
+                    <textarea cols="40" rows="8" name="vehiculoDGSP" id="vehiculoDGSP"></textarea>
+                </div>
+                <button data-theme="c" id="enviarSeguridadPrivada">Enviar reporte</button>
+            </div>
+        </div>
+
+        <div data-role="page" id="busquedaSeguridadPrivada">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#seguridadPrivada" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Atrás
+                </a>
+                <h3>
+                   Busqueda de empresas
+                </h3>
+            </div>
+            <div data-role="content">
+                <p class="desc_corralon">Ingrese el nombre de la empresa que desee consultar.<p>
+                <input type="search" name="placa" id="nombreEmpresa" value="" placeholder="Búsqueda" data-mini="false" />
+                <button type="submit" data-theme="c" id="botonBuscarEmpresa" data-mini="false">Buscar</button>
+
+                <ul data-role="listview" id="resultadoBusquedaEmpresa">
+                </ul>
+            </div>
+            <div data-theme="d" data-role="footer" data-tap-toggle="false" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#principal" data-transition="none" data-direction="reverse" data-icon="home">
+                                Inicio
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="detalleSeguridadPrivada">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#seguridadPrivada" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Atrás
+                </a>
+                <h3>
+                   Detalle
+                </h3>
+            </div>
+            <div data-role="content">
+                <a data-role="button" id="botonCrearReporte" data-theme="b" data-icon="alert" data-iconpos="left" href="#vistaFomularioSeguridadPrivada" data-transition="none">Realizar reporte</a>
+                <table  data-role="table" id="movie-table-custom" data-mode="reflow" class="movie-list table-stroke">
+                    <thead>
+                        <tr>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight:bold">Título</td>
+                            <td id="labelNombre" class="detallesLabels"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">Expediente</td>
+                            <td id="labelExpediente" class="detallesLabels"></td>
+                        </tr>
+                         <tr>
+                            <td style="font-weight:bold">Permiso</td>
+                            <td id="labelPermiso" class="detallesLabels"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">Fecha Vigencia</td>
+                            <td id="labelVigencia" class="detallesLabels"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">Modalidad:</td>
+                            <td id="labelModalidad" class="detallesLabels"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">Domicilio</td>
+                            <td id="labelCalle" class="detallesLabels"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">No Exterior</td>
+                            <td id="labelNoExterior" class="detallesLabels"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">No Interior</td>
+                            <td id="labelNoInterior" class="detallesLabels"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">Colonia</td>
+                            <td id="labelColonia" class="detallesLabels"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">Código Postal</td>
+                            <td id="labelCP" class="detallesLabels"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">Teléfono</td>
+                            <td id="labelTelefono" class="detallesLabels"></td>
+                        </tr>
+                        <!--<tr>
+                            <td style="font-weight:bold">Situación</td>
+                            <td id="labelSituacion" class="detallesLabels"></td>
+                        </tr>-->
+                        <tr>
+                            <td style="font-weight:bold">Delegación</td>
+                            <td id="labelDelegacion" class="detallesLabels"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div data-role="page" id="vistaMasInformacion">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#seguridadPrivada" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                    DGSP
+                </h3>
+            </div>
+
+            <div data-role="content">
+                <img src="css/img/dgsp_header.jpg" style="width:100%" />
+                        <h3>Información</h3>
+                        <p>Por ser la Seguridad Privada una actividad auxiliar a la función de Seguridad Pública, es regulada, registrada, supervisada y sancionada por la SSPDF cuando se desarrolla en el Distrito Federal (Art. 152 de la Ley General del Sistema Nacional de Seguridad Publica y Ley de Seguridad Privada para el D.F.)</p>
+                        <h3>Permisos</h3>
+                        <p>La falta de permiso, autorización o licencia para prestar servicios de Seguridad Privada en el D.F., y la contratación de empresas de Seguridad Privada o personas sin alguno de estos documentos, genera para la prestadora y para quien las contrata, sanciones que incluyen multas de hasta 5000 veces salario mínimo general vigente en el D.F.</p>
+                        <h3>Registros</h3>
+                        <p> La SSPDF cuenta con verificadores plenamente identificados en su página electrónica: <a href="#" id="link1">http://www.ssp.df.gob.mx</a></p>
+                        <h3>Requisitos</h3>
+                        <p>Los requisitos y regulación para prestar servicios de Seguridad Privada en el D.F. pueden consultarse a través de la siguiente liga: <a href="#" id="link2">http://www.ssp.df.gob.mx</a></p>
+            </div>
+        </div>
+
+        <!--Seguridad Turistica-->
+        <div data-role="page" id="policiaTuristica">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#principal" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                    Turismo
+                </h3>
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristicaEnglish" data-icon="grid" data-iconpos="right" class="ui-btn-right">
+                English
+                </a>
+            </div>
+
+            <div data-role="content" class="pol">
+                <img src="css/img/turismo_header.png" style="width:100%" />
+                 <ul data-role="listview" data-divider-theme="d" data-inset="false">
+                    <li data-theme="d">
+                        <a href="#asistenciaTurismo" data-transition="none">
+                            <h3>Asistencia</h3>
+                            <p>Teléfonos de información.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#sitiosTurismo" data-transition="none">
+                            <h3>Sitios de interés</h3>
+                            <p>Localización.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#medidasTurismo" data-transition="none">
+                            <h3>Recomendaciones para tu visita</h3>
+                            <p>Conoce información importante.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#derechosTurismo" data-transition="none">
+                            <h3>Derechos</h3>
+                            <p>Conoce tus derechos.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#obligacionesTurismo" data-transition="none">
+                            <h3>Obligaciones</h3>
+                            <p>Conoce tus obligaciones.</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="page" id="asistenciaTurismo">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristica" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                    Asistencia
+                </h3>
+            </div>
+
+            <div data-role="content" class="pol">
+                <a data-role="button" id="infoTuristica-button" data-theme="b" data-icon="star" data-iconpos="left" href="tel:01800-0089090" data-transition="none">Información turística</a>
+                <a data-role="button" id="casTurismo-button" data-theme="b" data-icon="star" data-iconpos="left" href="tel:52089898" data-transition="none">C.A.S.</a>
+                <a data-role="button" id="victimaTurismo-button" data-theme="b" data-icon="star" data-iconpos="left" href="tel:01800-0074533" data-transition="none">Victima de delito</a>
+            </div>
+        </div>
+
+        <div data-role="page" id="medidasTurismo">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristica" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                    Recomendaciones para tu visita
+                </h3>
+            </div>
+
+            <div data-role="content" class="pol">
+                <div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+                    <div data-role="collapsible">
+                        <h3>Seguridad</h3>
+                        <p>La moneda autorizada para cualquier transacción es el peso mexicano. Su tipo de cambio varía diariamente respecto a la cotización del dólar.</p>
+                        <p>Evita el uso de tarjetas de crédito, débito en lugares no establecidos.</p>
+                        <p>Utiliza cajeros automáticos (ATM) de supermercados o bancos que cuenten con personal de seguridad. Usa esos cajeros sólo durante el día.</p>
+                        <p>Si te extravías, mantén la calma y pregunta a un policía o dentro de comercios establecidos, por direcciones.</p>
+                        <p>Mantén bien vigiladas tus pertenencias, especialmente en zonas turísticas concurridas, o en medio de una aglomeración.</p>
+                        <p>En caso de asalto es mejor no resistirte, tu integridad vale más que las pertenencias y la resistencia generalmente produce violencia en los ladrones.</p>
+                        <p>Evita a toda costa lugares solitarios. No aceptes el ofrecimiento de ningún desconocido para transportarte en su automóvil a tu destino.</p>
+                        <p>Deja tu pasaporte y demás documentos migratorios originales bajo resguardo en la caja de seguridad del hotel. Únicamente lleva contigo una identificación y copias de los papeles que acreditan tu estancia en México.</p>
+                        <p>Lleva contigo solo la cantidad de dinero que consideres necesaria para tu día de actividades. Al igual que la recomendación anterior puedes dejar el resto en la caja fuerte de tu habitación.</p>
+                    </div>
+                    <div data-role="collapsible">
+                        <h3>Trasporte</h3>
+                        <p>Usa sólo servicios autorizados de taxis y de guías.</p>
+                        <p>En transportes como el metro de Ciudad de México hay vagones destinados exclusivamente para que las mujeres puedan viajar con mayor seguridad por este medio.</p>
+                        <p>Como recomendación general te sugerimos no exhibir objetos de valor cuando utilices el transporte público</p>
+                    </div>
+                    <div data-role="collapsible">
+                        <h3>Salud</h3>
+                        <p>Come en establecimientos apropiados y evita en la medida de lo posible los puestos callejeros.</p>
+                        <p>No bebas agua directamente del grifo.</p>
+                        <p>Identifica los números de atención de emergencias.</p>
+                    </div>
+                    <div data-role="collapsible">
+                        <h3>Vida Nocturna</h3>
+                        <p>Reconoce tus límites, no bebas de más. En lugares como Ciudad de México, se aplica el programa “Alcoholímetro” que detecta a automovilistas en estado de ebriedad. Los infractores son arrestados sin derecho a fianza.</p>
+                        <p>Tomar bebidas alcohólicas en la vía pública está prohibido en México. El infringir esta ley es causa de detención y pago de una multa.</p>
+                        <p>No aceptes el ofrecimiento de drogas. La portación y el consumo de drogas son altamente penalizados por las leyes mexicanas.</p>
+                        <p>Si no te encuentras en buenas condiciones o no cuentas con un vehículo propio al salir de un centro nocturno, pide que soliciten para ti un “taxi de sitio”. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="obligacionesTurismo">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristica" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                    Obligaciones
+                </h3>
+            </div>
+
+            <div data-role="content" class="pol">
+                <p>
+          Observar las normas de higiene y convivencia social para la adecuada utilización de los 
+          servicios y el patrimonio turístico.</p>
+
+                <p>
+          Abstenerse de cometer cualquier acto contrario a lo establecido en las leyes y 
+          reglamentos, así como propiciar conductas que puedan ser ofensivas o discriminatorias 
+          contra cualquier persona o comunidad.</p>
+
+                <p>
+          Respetar los reglamentos de uso y régimen interior de los servicios turísticos.
+          </p>
+                
+        <p>
+          Efectuar el pago de los servicios prestados en el momento de la presentación de la 
+          factura o en su caso, en el tiempo y lugar convenidos, sin que el hecho de presentar 
+          una reclamación o queja exima del citado pago 
+          </p>
+
+           <p>
+          Respetar el entorno natural y cultural de los sitios en que realice sus actividades 
+          turísticas 
+         </p>
+
+         <p>
+          Cualquier otra que contemple la Ley General, la Ley, su Reglamento u otras 
+          disposiciones aplicables.
+         </p>
+            </div>
+        </div>
+
+         <div data-role="page" id="derechosTurismo">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristica" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                    Derechos
+                </h3>
+            </div>
+
+            <div data-role="content" class="pol">
+                <p>
+                  No ser discriminado en la ejecución de las actividades turísticas por cualquiera de los 
+                  motivos establecidos en el artículo 1° de la Constitución Política de los Estados Unidos 
+                  Mexicanos y disfrutar de libre acceso y goce a todo el patrimonio turístico, así como su 
+                  permanencia en las instalaciones de dichos servicios, sin más limitaciones que las 
+                  derivadas de los reglamentos específicos de cada actividad.
+                </p>
+                <p>Obtener por cualquier medio disponible, la información previa, veraz, completa y 
+                   objetiva sobre los servicios que conforman los diversos segmentos de la actividad 
+                   turística y en su caso, el precio de los mismos.</p>
+                <p>
+                  Recibir servicios turísticos de calidad y de acuerdo a las condiciones contratadas, así 
+                  como obtener los documentos que acrediten los términos de contratación, facturas o 
+                  justificantes de pago.
+                  </p>
+                  <p>
+                Formular quejas, denuncias y reclamaciones.</p>
+                    <p>
+                  Los demás derechos reconocidos por las disposiciones federales y del Distrito Federal, 
+                  aplicables a la materia. 
+                 </p>
+            </div>
+        </div>
+
+        <div data-role="page" id="sitiosTurismo">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristica" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Regresar
+                </a>
+                <h3>
+                    Sitios de interés
+                </h3>
+            </div>
+            <div id="header_menu"></div>
+            <div data-role="content">
+                <ul data-role="listview" data-divider-theme="d" data-inset="false">
+                    <li data-theme="d">
+                        <a id="embajadas-action" href="#sitiosDetalleTurismo" class="verSitiosTurismo" data-transition="none">
+                            <h3>Embajadas</h3>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a id="museos-action" href="#sitiosDetalleTurismo" class="verSitiosTurismo" data-transition="none">
+                            <h3>Museos</h3>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a id="hoteles-action" href="#sitiosDetalleTurismo" class="verSitiosTurismo" data-transition="none">
+                            <h3>Hoteles</h3>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="page" id="sitiosDetalleTurismo">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristica" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Atrás
+                </a>
+                <h3>
+                   Sitos de interés
+                </h3>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" class="resultadoSitiosTurismo">
+                </ul>
+            </div>
+            <div data-theme="d" data-role="footer" data-tap-toggle="false" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#policiaTuristica" data-transition="none" data-direction="reverse" data-icon="home">
+                                Inicio
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!--Seguridad english Turistica-->
+        <div data-role="page" id="policiaTuristicaEnglish">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristica" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Back
+                </a>
+                <h3>
+                    Turism
+                </h3>
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristica" data-icon="grid" data-iconpos="right" class="ui-btn-right">
+                Español
+                </a>
+            </div>
+
+            <div data-role="content" class="pol">
+                <img src="css/img/turismo_header.png" style="width:100%" />
+                 <ul data-role="listview" data-divider-theme="d" data-inset="false">
+                    <li data-theme="d">
+                        <a href="#asistenciaTurismoEnglish" data-transition="none">
+                            <h3>Assistance</h3>
+                            <p>Information phones.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#sitiosTurismoEnglish" data-transition="none">
+                            <h3>Places</h3>
+                            <p>Locations.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#medidasTurismoEnglish" data-transition="none">
+                            <h3>Recommendations for your visit</h3>
+                            <p>Know important information.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#derechosTurismoEnglish" data-transition="none">
+                            <h3>Rights</h3>
+                            <p>Know your rights.</p>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a href="#obligacionesTurismoEnglish" data-transition="none">
+                            <h3>Obligations</h3>
+                            <p>Know your obligations.</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="page" id="asistenciaTurismoEnglish">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristicaEnglish" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Back
+                </a>
+                <h3>
+                    Assistance
+                </h3>
+            </div>
+
+            <div data-role="content" class="pol">
+                <a data-role="button" id="infoTuristica-button" data-theme="b" data-icon="star" data-iconpos="left" href="tel:01800-0089090" data-transition="none">Tourist information</a>
+                <a data-role="button" id="casTurismo-button" data-theme="b" data-icon="star" data-iconpos="left" href="tel:52089898" data-transition="none">C.A.S.</a>
+                <a data-role="button" id="victimaTurismo-button" data-theme="b" data-icon="star" data-iconpos="left" href="tel:01800-0074533" data-transition="none">Victim of crime</a>
+            </div>
+        </div>
+
+        <div data-role="page" id="medidasTurismoEnglish">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristicaEnglish" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Back
+                </a>
+                <h3>
+                    Recommendations for your visit
+                </h3>
+            </div>
+
+            <div data-role="content" class="pol">
+                <div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+                    <div data-role="collapsible">
+                        <h3>Security</h3>
+                        <p>The currency authorized for any transaction is the Mexican peso. Its exchange rate varies daily compared to the dollar. Avoid using credit cards, debit cards in places not established.</p>
+                        <p>Use automated teller machines (ATM) to supermarkets or banks with security personnel. Use these machines only during the day.</p>
+                        <p>If you stray, stay calm and ask directions a policeman or within established businesses.</p>
+                        <p>Keep monitored belongings, especially in crowded tourist areas, or among a crowd.</p>
+                        <p>In case of assault is better not resist, resistance usually induce violence.</p>
+                        <p>Avoid at all costs solitary places. Do not accept the offer no stranger to transport in your car to your destination.</p>
+                        <p>Keep your passport and other original immigration documents under guard in the hotel safe. Only carry identification and copies of the papers that prove your stay in Mexico.</p>
+                        <p>Porting the amount of money that you consider necessary for your day's activities. Like the previous recommendation can leave the rest in your room in a safe.</p>
+                    </div>
+                    <div data-role="collapsible">
+                        <h3>Transportation</h3>
+                        <p>Use only authorized taxis and guide services.</p>
+                        <p>Transportation, including Mexico City subway cars there exclusively for women to travel more comfortably.</p>
+                        <p>Do not display valuables when using public transport.</p>
+                    </div>
+                    <div data-role="collapsible">
+                        <h3>Health</h3>
+                        <p>Eating in restaurants, shops avoid not established.</p>
+                        <p>Do not drink water straight from the tap.</p>
+                        <p>Identify numbers emergency care.</p>
+                    </div>
+                    <div data-role="collapsible">
+                        <h3>Nightlife</h3>
+                        <p>Consume alcohol in moderation. In places like Mexico City, the "Breathalyzer" program, this program detects drunk drivers applied. Violators are arrested without bail.</p>
+                        <p>In Mexico it is forbidden to drink alcohol in public. The violation of this law is grounds for arrest and fined.</p>
+                        <p>Do not accept the offer of drugs. The carrying and drug use are highly penalized by Mexican law.</p>
+                        <p>If you do not have a vehicle rented or own when leaving a nightclub, calls requesting for you a "taxi place".</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="obligacionesTurismoEnglish">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristicaEnglish" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Back
+                </a>
+                <h3>
+                    Obligations
+                </h3>
+            </div>
+
+            <div data-role="content" class="pol">
+                <p>
+          Observe the rules of hygiene and social interaction for the proper utilization of services and tourism heritage.</p>
+
+                <p>
+         Refrain from any act contrary to the provisions of laws and regulations and not encourage behaviors that may be offensive or discriminate against any individual or community.</p>
+
+                <p>
+          Respect use regulations and internal rules of tourism services.
+          </p>
+                
+        <p>
+          Pay the services provided at the time of submission of the bill at the time and place agreed. The filing of a claim or complaint does not exempt from payment.
+          </p>
+
+           <p>
+          Respect the natural and cultural environment of the places make their tourist activities.
+         </p>
+
+         <p>
+         Any other that considers the General Law or other applicable provisions.
+         </p>
+            </div>
+        </div>
+
+         <div data-role="page" id="derechosTurismoEnglish">
+            <div data-theme="c" data-role="header" data-position="fixed">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristicaEnglish" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Back
+                </a>
+                <h3>
+                    Rights
+                </h3>
+            </div>
+
+            <div data-role="content" class="pol">
+                <p>
+                 Under no circumstances can be discriminated in the implementation of tourism activities for the rights set out in Article 1 of the Constitution of the Mexican United States. You can enjoy access to heritage tourism, and can remain on the premises of such services, within the limitations of the specific regulations of each activity.
+                </p>
+                <p>Get previous, true, complete and objective information about the services that make up the segments of tourism and price of services.</p>
+                <p>
+                 Receive quality tourism services according to the contract terms. Get the documents establishing the terms of contracts, invoices or proof of payment.
+                  </p>
+                  <p>
+                Making complaints and claims.</p>
+                   
+            </div>
+        </div>
+
+        <div data-role="page" id="sitiosTurismoEnglish">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristicaEnglish" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Back
+                </a>
+                <h3>
+                    Places
+                </h3>
+            </div>
+            <div id="header_menu"></div>
+            <div data-role="content">
+                <ul data-role="listview" data-divider-theme="d" data-inset="false">
+                    <li data-theme="d">
+                        <a id="embajadas-action" href="#sitiosDetalleTurismoEnglish" class="verSitiosTurismo" data-transition="none">
+                            <h3>Embassies</h3>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a id="museos-action" href="#sitiosDetalleTurismoEnglish" class="verSitiosTurismo" data-transition="none">
+                            <h3>Museums</h3>
+                        </a>
+                    </li>
+                    <li data-theme="d">
+                        <a id="hoteles-action" href="#sitiosDetalleTurismoEnglish" class="verSitiosTurismo" data-transition="none">
+                            <h3>Hotels</h3>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="page" id="sitiosDetalleTurismoEnglish">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-direction="reverse" data-transition="none"
+                data-theme="c" href="#policiaTuristicaEnglish" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                Back
+                </a>
+                <h3>
+                   Places
+                </h3>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" class="resultadoSitiosTurismo">
+                </ul>
+            </div>
+            <div data-theme="d" data-role="footer" data-tap-toggle="false" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#policiaTuristicaEnglish" data-transition="none" data-direction="reverse" data-icon="home">
+                                Home
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--fin-->
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/libs/jquery-1.8.0.min.js"></script>
+        <script type="text/javascript" src="js/libs/jquery.mobile.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+    </body>
+</html>
